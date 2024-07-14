@@ -1,6 +1,6 @@
 {
   "name": "emojis-downloader",
-  "version": "v1.0.0",
+  "version": "v1.0.1",
   "description": "Emojis Downloader Discord.",
   "main": "emojis.js",
   "scripts": {
