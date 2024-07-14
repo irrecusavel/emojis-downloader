@@ -375,10 +375,40 @@ const downloadEmojis = async () => {
   }
 };
 
-const handleUpdates = () => {
+
+const handleUpdates = async () => {
   console.clear();
   console.log("Verificando atualizações...");
-  console.log("Nenhuma atualização encontrada.");
+
+  try {
+    const response = await axios.get(
+      "https://api.github.com/repos/irrecusavel/emojis-downloader/releases/latest"
+    );
+
+    const latestVersion = response.data.tag_name;
+
+    if (compareVersions(packageJson.version, latestVersion) < 0) {
+      console.log(
+        `Existe uma nova versão disponível: ${latestVersion} (atual: ${packageJson.version}).`
+      );
+    } else {
+      console.log("Você está utilizando a versão mais recente.");
+    }
+  } catch (error) {
+    console.error("Erro ao verificar atualizações:", error.message);
+  }
+};
+
+const compareVersions = (versionA, versionB) => {
+  const partsA = versionA.split(".").map(Number);
+  const partsB = versionB.split(".").map(Number);
+
+  for (let i = 0; i < 3; i++) {
+    if (partsA[i] > partsB[i]) return 1;
+    if (partsA[i] < partsB[i]) return -1;
+  }
+
+  return 0;
 };
 
 const initialize = async () => {
