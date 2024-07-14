@@ -331,8 +331,21 @@ const downloadEmojis = async () => {
 
     for (let i = 0; i < emojis.length; i++) {
       const emoji = emojis[i];
-      const filename = `${emoji.name}.${emoji.animated ? 'gif' : 'png'}`;
-      const url = `https://cdn.discordapp.com/emojis/${emoji.id}.${emoji.animated ? 'gif' : 'png'}`;
+      const ext = emoji.animated ? 'gif' : 'png';
+      let filename = `${emoji.name}.${ext}`;
+      const url = `https://cdn.discordapp.com/emojis/${emoji.id}.${ext}`;
+      let existing = true;
+      let number = 1;
+
+      while (existing) {
+        try {
+          await fs.promises.access(path.join(emojisDir, filename));
+          filename = `${emoji.name}-${number}.${ext}`;
+          number++;
+        } catch (error) {
+          existing = false;
+        }
+      }
 
       try {
         const response = await axios.get(url, { responseType: 'arraybuffer', headers });
@@ -374,7 +387,6 @@ const downloadEmojis = async () => {
     console.error(colors.red(`[${moment().format('DD-MM-YYYY HH:mm:ss')}] Erro ao obter emojis do servidor: ${error.message}`));
   }
 };
-
 
 const handleUpdates = async () => {
   console.clear();
