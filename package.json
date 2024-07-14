@@ -9,8 +9,8 @@
   },
   "keywords": [],
   "author": "irrecusavel",
-  "repository": "https://github.com/repos/irrecusavel/emoji-downloader",
-  "repositoryAPI": "https://api.github.com/repos/irrecusavel/emoji-downloader",
+  "repository": "https://github.com/repos/irrecusavel/emojis-downloader",
+  "repositoryAPI": "https://api.github.com/repos/irrecusavel/emojis-downloader",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.7.2",
